@@ -4,9 +4,13 @@ from collections import Counter
 import configparser
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from dotenv import load_dotenv
+import os
 
+load_dotenv()  # Загружает переменные из .env
 config = configparser.ConfigParser()
 config.read('config.ini')
+json_api_google = os.getenv('JSON_API_GOOGLE')
 
 
 class Analysis:
@@ -61,7 +65,7 @@ class Analysis:
                 '%Y-%m-%d %H:%M:%S'
             )
         correct_solution = list(filter(lambda x: x['is_correct'] == 1, self.data))
-        cnt_users = set([user['user_id'] for user in res])
+        cnt_users = set([user['user_id'] for user in self.data])
         result = {
             'date': current_date,
             'cnt_attemps': len(self.data),
@@ -83,7 +87,7 @@ class Analysis:
             'https://www.googleapis.com/auth/drive'
         ]
         creds = ServiceAccountCredentials.from_json_keyfile_name(
-            config['Access']['JSON_API_GOOGLE'], scope
+            json_api_google, scope
         )
         client = gspread.authorize(creds)
         sheet = client.open_by_key(config['Access']['ID_KEY_API_GOOGLE']).sheet1
