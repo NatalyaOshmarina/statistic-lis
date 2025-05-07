@@ -10,12 +10,13 @@ from trancformation import Transformation
 from analisys import Analysis
 from loading import Database
 
+dirname = os.path.dirname(__file__)
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(os.path.join(dirname, 'config.ini'))
 
 
 current_date = datetime.now().strftime('%Y%m%d.log')
-folder = config['Files']['FILE_PATH']
+folder = os.path.join(dirname, 'logs')
 
 # Создаем папку для логов (если не существует)
 os.makedirs(folder, exist_ok=True)
