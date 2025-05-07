@@ -14,7 +14,6 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 
-# Формируем имя файла с логами
 current_date = datetime.now().strftime('%Y%m%d.log')
 folder = config['Files']['FILE_PATH']
 
