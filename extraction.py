@@ -20,7 +20,7 @@ class Extraction:
     }
 
     def __init__(self) -> None:
-        self.start = '2023-04-01 00:00:57.860798'
+        self.start = datetime.now() - timedelta(days=365*2)
         self.interval = timedelta(hours=24)
         self._params_gen = self.__get_params()
 
@@ -36,10 +36,7 @@ class Extraction:
         while True:
             # Создаём новый словарь на основе BASE_PARAMS
             params = self.BASE_PARAMS.copy()
-            end = datetime.strftime(
-                datetime.strptime(self.start, '%Y-%m-%d %H:%M:%S.%f') + self.interval,
-                '%Y-%m-%d %H:%M:%S.%f'
-            )
+            end = self.start + self.interval
             params['start'] = self.start
             params['end'] = end
             yield params

@@ -38,18 +38,9 @@ class Database:
                 self.connection.autocommit = True
 
             self.cursor = self.connection.cursor()
-            self.primary_key = 0
-            self._primary_key_gen = self.__get_primary_key()
         except Exception as err:
             logging.error(f'Ошибка инициализации БД: {err}')
             raise
-
-    def __get_primary_key(self):
-        while True:
-            # Присваиваем значение первичного ключа
-            yield self.primary_key
-            # Обновляем значение первичного ключа для следующей итерации
-            self.primary_key += 1
 
     @staticmethod
     def ensure_utf8(value):
@@ -74,8 +65,7 @@ class Database:
         try:
             for user in data:
                 # Подготовка данных
-                id = next(self._primary_key_gen)
-                user['id'] = user.get('id', id)
+                #user['id'] = user.get('id', id)
                 columns = ', '.join(user.keys())
                 placeholders = ', '.join(['%s'] * len(user))
                 values = [self.ensure_utf8(v) for v in user.values()]
