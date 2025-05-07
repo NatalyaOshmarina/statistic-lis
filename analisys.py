@@ -8,8 +8,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()  # Загружает переменные из .env
+dirname = os.path.dirname(__file__)
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(os.path.join(dirname, 'config.ini'))
 json_api_google = os.getenv('JSON_API_GOOGLE')
 
 

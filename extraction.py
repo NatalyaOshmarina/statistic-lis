@@ -2,9 +2,11 @@ from datetime import datetime, timedelta
 import requests
 import logging
 import configparser
+import os
 
+dirname = os.path.dirname(__file__)
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(os.path.join(dirname, 'config.ini'))
 
 
 class Extraction:

@@ -1,9 +1,11 @@
 import configparser
 import psycopg2
 import logging
+import os
 
+dirname = os.path.dirname(__file__)
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(os.path.join(dirname, 'config.ini'))
 
 
 class Database:
